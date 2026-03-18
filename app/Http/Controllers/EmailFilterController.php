@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Models\EmailFilterResult;
+use Illuminate\Support\Facades\Auth;
 
 class EmailFilterController extends Controller
 {
@@ -17,15 +19,15 @@ class EmailFilterController extends Controller
     public function process(Request $request)
     {
         $validated = $request->validate([
-            'main_file' => ['required', 'file', 'mimes:csv,txt,xlsx'],
-            'remove_file' => ['required', 'file', 'mimes:csv,txt,xlsx'],
+            'source_file' => ['required', 'file', 'mimes:csv,txt,xlsx'],
+            'exclude_file' => ['required', 'file', 'mimes:csv,txt,xlsx'],
         ]);
 
-        $mainPath = $validated['main_file']->getRealPath();
-        $removePath = $validated['remove_file']->getRealPath();
+        $mainPath = $validated['source_file']->getRealPath();
+        $removePath = $validated['exclude_file']->getRealPath();
 
-        $mainEmails = $this->extractEmails($mainPath, $validated['main_file']->getClientOriginalExtension());
-        $removeEmails = $this->extractEmails($removePath, $validated['remove_file']->getClientOriginalExtension());
+        $mainEmails = $this->extractEmails($mainPath, $validated['source_file']->getClientOriginalExtension());
+        $removeEmails = $this->extractEmails($removePath, $validated['exclude_file']->getClientOriginalExtension());
 
         $removeSet = array_flip($removeEmails);
         $result = array_values(array_filter($mainEmails, function ($email) use ($removeSet) {
@@ -40,6 +42,16 @@ class EmailFilterController extends Controller
         $relativePath = "email-filter/{$token}.csv";
 
         Storage::put($relativePath, $this->emailsToCsv($result));
+
+        // Store result in the database
+        EmailFilterResult::create([
+            'user_id' => Auth::id(),
+            'filename' => $relativePath,
+            'token' => $token,
+            'source_count' => $mainCount,
+            'exclude_count' => $removeCount,
+            'result_count' => $resultCount,
+        ]);
 
         $request->session()->flash('email_filter.preview', [
             'main' => $mainCount,

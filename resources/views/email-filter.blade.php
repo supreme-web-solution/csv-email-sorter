@@ -19,11 +19,11 @@
                             Preview summary
                         </p>
                         <p class="text-sm">
-                            <span class="font-medium">Main:</span> {{ number_format($preview['main']) }}
+                            <span class="font-medium">Source File:</span> {{ number_format($preview['main']) }}
                             &nbsp;&middot;&nbsp;
-                            <span class="font-medium">Remove:</span> {{ number_format($preview['remove']) }}
+                            <span class="font-medium">Exclude File:</span> {{ number_format($preview['remove']) }}
                             &nbsp;&middot;&nbsp;
-                            <span class="font-medium">Result:</span> {{ number_format($preview['result']) }}
+                            <span class="font-medium">Result File:</span> {{ number_format($preview['result']) }}
                         </p>
                     </div>
 
@@ -59,12 +59,12 @@
 
             <div class="grid gap-4 md:grid-cols-2">
                 <div class="flex flex-col gap-2">
-                    <label for="main_file" class="text-sm font-medium text-neutral-800 dark:text-neutral-100">
-                        Main email list (keep)
+                    <label for="source_file" class="text-sm font-medium text-neutral-800 dark:text-neutral-100">
+                        Source email list
                     </label>
                     <input
-                        id="main_file"
-                        name="main_file"
+                        id="source_file"
+                        name="source_file"
                         type="file"
                         accept=".csv,.txt,.xlsx"
                         required
@@ -72,17 +72,17 @@
                         data-height="160"
                     >
                     <p class="text-xs text-neutral-500 dark:text-neutral-400">
-                        Supported formats: CSV, XLSX, TXT. One email per line or in the first column.
+                        Upload your main list of emails to keep. Supported formats: CSV, XLSX, TXT. One email per line or in the first column.
                     </p>
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label for="remove_file" class="text-sm font-medium text-neutral-800 dark:text-neutral-100">
-                        Emails to remove
+                    <label for="exclude_file" class="text-sm font-medium text-neutral-800 dark:text-neutral-100">
+                        Emails to exclude
                     </label>
                     <input
-                        id="remove_file"
-                        name="remove_file"
+                        id="exclude_file"
+                        name="exclude_file"
                         type="file"
                         accept=".csv,.txt,.xlsx"
                         required
@@ -90,7 +90,7 @@
                         data-height="160"
                     >
                     <p class="text-xs text-neutral-500 dark:text-neutral-400">
-                        Any email found here will be removed from the main list.
+                        Upload a list of emails to exclude from the source list. Any email found here will be removed from the result.
                     </p>
                 </div>
             </div>
