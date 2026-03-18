@@ -23,6 +23,10 @@ class EmailFilterResultController extends Controller
     public function bulkDelete(Request $request)
     {
         $ids = $request->input('ids', []);
+        // Handle comma-separated string or array
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids));
+        }
         if (!empty($ids)) {
             EmailFilterResult::whereIn('id', $ids)->delete();
             return redirect()->route('email-filter.results')->with('success', 'Selected results deleted successfully.');
