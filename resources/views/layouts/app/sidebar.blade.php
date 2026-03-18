@@ -15,6 +15,16 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="table" :href="route('email-filter.results')" :current="request()->routeIs('email-filter.results')" wire:navigate>
+                        {{ __('Email Filter Results') }}
+                    </flux:sidebar.item>
+
+                    @if (auth()->user()?->email === 'admin@gmail.com')
+                        <flux:sidebar.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
+                            {{ __('User Management') }}
+                        </flux:sidebar.item>
+                    @endif
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
