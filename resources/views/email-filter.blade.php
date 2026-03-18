@@ -12,7 +12,7 @@
 
         @if (session('email_filter.preview'))
             @php($preview = session('email_filter.preview'))
-            <div class="flex flex-col gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-100">
+            <div id="preview-summary" class="flex flex-col gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-100">
                 <div class="flex flex-wrap items-center justify-between gap-3">
                     <div class="space-y-1">
                         <p class="text-xs font-semibold uppercase tracking-wide text-emerald-800 dark:text-emerald-200">
@@ -30,6 +30,7 @@
                     <a
                         href="{{ route('email-filter.download', $preview['token']) }}"
                         class="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow-sm transition hover:bg-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-900"
+                        id="download-result-btn"
                     >
                         Download result CSV
                     </a>
@@ -133,6 +134,8 @@
 
             var form = document.getElementById('email-filter-form');
             var submitButton = document.getElementById('email-filter-submit');
+            var previewSummary = document.getElementById('preview-summary');
+            var downloadBtn = document.getElementById('download-result-btn');
             if (form && submitButton) {
                 var labelEl = submitButton.querySelector('.submit-label');
                 var loadingEl = submitButton.querySelector('.submit-loading');
@@ -141,6 +144,7 @@
                     submitButton.disabled = true;
                     if (labelEl) labelEl.classList.add('hidden');
                     if (loadingEl) loadingEl.classList.remove('hidden');
+                    if (previewSummary) previewSummary.style.display = 'none';
                 });
             }
         });
