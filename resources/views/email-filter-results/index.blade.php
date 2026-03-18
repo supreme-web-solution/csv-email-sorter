@@ -66,13 +66,6 @@
                                 </tr>
                             @endforelse
                         </form>
-                        @empty
-                            <tr>
-                                <td class="px-4 py-6 text-center text-sm text-neutral-500 dark:text-neutral-400" colspan="7">
-                                    No results yet.
-                                </td>
-                            </tr>
-                        @endforelse
                     </tbody>
                 </table>
             </div>
