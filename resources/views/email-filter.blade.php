@@ -23,6 +23,8 @@
                             &nbsp;&middot;&nbsp;
                             <span class="font-medium">Exclude File:</span> {{ number_format($preview['remove']) }}
                             &nbsp;&middot;&nbsp;
+                            <span class="font-medium">Deleted:</span> {{ number_format(max($preview['main'] - $preview['result'], 0)) }}
+                            &nbsp;&middot;&nbsp;
                             <span class="font-medium">Result File:</span> {{ number_format($preview['result']) }}
                         </p>
                     </div>
