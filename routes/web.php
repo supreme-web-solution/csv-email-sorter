@@ -13,7 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('email-filter/download/{token}', [EmailFilterController::class, 'download'])->name('email-filter.download');
     Route::get('email-filter/results', [EmailFilterResultController::class, 'index'])->name('email-filter.results');
     Route::delete('email-filter/results/{id}', [EmailFilterResultController::class, 'destroy'])->name('email-filter.results.delete');
-    Route::delete('email-filter/results/bulk-delete', [EmailFilterResultController::class, 'bulkDelete'])->name('email-filter.results.bulkDelete');
+    Route::post('email-filter/results/bulk-delete', [EmailFilterResultController::class, 'bulkDelete'])->name('email-filter.results.bulkDelete');
 
     Route::livewire('admin/users', AdminUsers::class)
         ->middleware('admin.email')
