@@ -9,10 +9,17 @@ class EmailFilterResultController extends Controller
 {
     public function index()
     {
-        if (strtolower(auth()->user()?->email ?? '') !== 'admin@gmail.com') {
-            abort(403);
+        $user = auth()->user();
+        if (strtolower($user?->email ?? '') === 'admin@gmail.com') {
+            // Admin sees all results
+            $results = EmailFilterResult::with('user')->latest()->paginate(20);
+        } else {
+            // Other users see only their own results
+            $results = EmailFilterResult::with('user')
+                ->where('user_id', $user->id)
+                ->latest()
+                ->paginate(20);
         }
-        $results = EmailFilterResult::with('user')->latest()->paginate(20);
         return view('email-filter-results.index', compact('results'));
     }
 
