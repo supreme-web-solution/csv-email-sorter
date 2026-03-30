@@ -9,6 +9,9 @@ class EmailFilterResultController extends Controller
 {
     public function index()
     {
+        if (strtolower(auth()->user()?->email ?? '') !== 'admin@gmail.com') {
+            abort(403);
+        }
         $results = EmailFilterResult::with('user')->latest()->paginate(20);
         return view('email-filter-results.index', compact('results'));
     }
