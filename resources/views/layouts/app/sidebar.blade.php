@@ -19,12 +19,10 @@
                     wire:navigate>
                     {{ __('Dashboard') }}
                 </flux:sidebar.item>
-                @if (strtolower(auth()->user()?->email ?? '') === 'admin@gmail.com')
                     <flux:sidebar.item icon="table" :href="route('email-filter.results')"
                         :current="request()->routeIs('email-filter.results')" wire:navigate>
                         {{ __('Email Filter Results') }}
                     </flux:sidebar.item>
-                @endif
             </flux:sidebar.group>
 
             @if (strtolower(auth()->user()?->email ?? '') === 'admin@gmail.com')
