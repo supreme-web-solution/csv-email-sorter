@@ -12,7 +12,7 @@ class AdminEmail
     {
         $user = $request->user();
 
-        if (! $user || $user->email !== 'admin@gmail.com') {
+        if (! $user || strtolower($user->email) !== 'admin@gmail.com') {
             abort(403);
         }
 
